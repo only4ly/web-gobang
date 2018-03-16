@@ -11,7 +11,7 @@ cd web-gobang
 npm install
 
 // 开发模式 开启devServer
-npm run dev
+npm start
 
 // 打包
 npm run build
