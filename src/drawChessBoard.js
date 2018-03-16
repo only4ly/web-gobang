@@ -1,4 +1,5 @@
 import { CHESS_BOARD_SIZE, COLUMN_WIDTH, CHESS_BOARD_LINE_COLOR, CHESS_BOARD_BACKGROUND } from './config'
+
 export default () => {
   const chessBoard = document.createElement('div')
   const boardSize = (CHESS_BOARD_SIZE + 1) * COLUMN_WIDTH

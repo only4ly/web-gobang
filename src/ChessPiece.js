@@ -24,4 +24,18 @@ export default class ChessPiece {
     const chessPieceDom = document.getElementById(this.id)
     chessPieceDom.parentNode.removeChild(chessPieceDom)
   }
+  drawCanvas (ctx) {
+    console.log(this)
+    ctx.fillStyle = CHESS_TYPES[this.chessType].color
+    const getOffset = val => (val + 1) * COLUMN_WIDTH
+    const circle = new Path2D()
+    const x = getOffset(this.x)
+    const y = getOffset(this.y)
+    circle.moveTo(x, y)
+    circle.arc(x, y, CHESS_PIECE_WIDTH / 2, 0, 2 * Math.PI)
+    ctx.fill(circle)
+  }
+  removeCanvs (ctx) {
+
+  }
 }

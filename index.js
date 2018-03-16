@@ -1,19 +1,17 @@
-import { COLUMN_WIDTH } from './src/config'
-import init from './src/drawChessBoard'
-import ChessPiece from './src/ChessPiece'
+import Gamer from './src/Gamer'
 
-let counts = 0
+let gameConfig = {isCanvas: false}
+let game = new Gamer(gameConfig)
 
-const chessBoard = init()
-const transfromOffset2Grid = val => ~~((val / COLUMN_WIDTH) - 0.5)
-// 鼠标指针在点击元素（DOM）中的X坐标
-chessBoard.onclick = ({clientX, clientY}) => {
-  const x = transfromOffset2Grid(clientX)
-  const y = transfromOffset2Grid(clientY)
-  const type = counts % 2 === 0 ? 'BLACK_CHESS_PIECE' : 'WHITE_CHESS_PIECE'
-  const chessPiece = new ChessPiece(x, y, type, counts)
-  counts++
-  chessPiece.draw(chessBoard)
+document.getElementById('start').onclick = () => {
+  game.removeDom()
+  game = new Gamer(gameConfig) // 这里可以优化的, 懒得写了
 }
-
-document.getElementById('app').appendChild(chessBoard)
+document.getElementById('switch').onclick = () => {
+  game.removeDom()
+  gameConfig = {chessPieceArr: game.chessPieceArr, isCanvas: !gameConfig.isCanvas}
+  game = new Gamer(gameConfig)
+}
+document.getElementById('cancel').onclick = () => {
+  game.cancelLastStep()
+}
