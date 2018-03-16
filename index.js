@@ -12,6 +12,7 @@ document.getElementById('switch').onclick = () => {
   gameConfig = {chessPieceArr: game.chessPieceArr, isCanvas: !gameConfig.isCanvas}
   game = new Gamer(gameConfig)
 }
-document.getElementById('cancel').onclick = () => {
-  game.cancelLastStep()
+const cancel = document.getElementById('cancel')
+cancel.onclick = () => {
+  cancel.innerHTML === '悔棋' ? game.cancelLastStep() : game.cancelTheCancel()
 }

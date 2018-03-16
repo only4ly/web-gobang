@@ -1,33 +1,43 @@
-import drawBorad from './drawChessBoard'
-import { initCanvas, drawBoardLines } from './drawChessBoardCanvas'
+import drawBorad from './drawchessBoard'
+import { initCanvas, drawBoardLines } from './drawchessBoardCanvas'
 import ChessPiece from './ChessPiece'
 import { CHESS_TYPES } from './config'
 import { initChessPieceArr, transfromOffset2Grid, atLeastOneTrue } from './util'
 
+/**
+ * Gamer 类, 初始化一局五子棋游戏
+ * PS: 我觉得这个类写的有点乱了...
+ * 总共维护了6个状态
+ * isCanvas 是否是canvas模式
+ * chessPieceArr 保存棋盘中的棋子状态
+ * count 棋盘中棋子数量, 关系到落子轮替顺序
+ * lastStep 保存上一次的落子情况, 用于悔棋操作 (当可以毁多子的时候, 用数组去维护)
+ * chessBoardDom 保存棋盘Dom节点
+ * chessBoardCtx 当渲染模式是canvas时, 保存canvas的Context (其实也可以不保存, 根据dom去getContext即可)
+ */
 export default class Gamer {
   /**
    * 可以用这个数组恢复棋局, 顺便在进行切换canvas和dom的时候也可以用的
    * @param {Array<Array<Object>>} chessPieceArr 保存棋局的数组
    */
   constructor ({isCanvas, chessPieceArr = initChessPieceArr()} = {isCanvas: false, chessPieceArr: initChessPieceArr()}) {
-    console.log(isCanvas)
     this.chessPieceArr = chessPieceArr
     this.isCanvas = isCanvas
     const chessTemp = this.getRecoverArray(chessPieceArr)
     this.count = chessTemp.length
     if (this.isCanvas) {
-      this.chessBoard = initCanvas()
-      const ctx = this.chessBoard.getContext('2d')
-      this.ctx = ctx
-      drawBoardLines(ctx)
-      chessTemp.forEach(item => { item.drawCanvas(ctx) })
+      this.chessBoardDom = initCanvas()
+      const chessBoardCtx = this.chessBoardDom.getContext('2d')
+      this.chessBoardCtx = chessBoardCtx
+      drawBoardLines(chessBoardCtx)
+      chessTemp.forEach(item => { item.drawCanvas(chessBoardCtx) })
     } else {
-      this.chessBoard = drawBorad()
-      chessTemp.forEach(item => { item.draw(this.chessBoard) })
+      this.chessBoardDom = drawBorad()
+      chessTemp.forEach(item => { item.draw(this.chessBoardDom) })
     }
-    this.chessBoard.onclick = (e) => { this.onBoardClick(e) }
+    this.chessBoardDom.onclick = (e) => { this.onBoardClick(e) }
     if (!isCanvas) {
-      document.getElementById('app').appendChild(this.chessBoard)
+      document.getElementById('app').appendChild(this.chessBoardDom)
     }
   }
   getRecoverArray (chessPieceArr) {
@@ -44,24 +54,24 @@ export default class Gamer {
     }
     return chessTemp
   }
-  onBoardClick (e) {
-    const {clientX, clientY} = e
-    console.log(e)
-    console.log(window.scrollY)
+  onBoardClick ({clientX, clientY}) {
+    console.log(this)
     const x = transfromOffset2Grid(clientX)
     const y = transfromOffset2Grid(clientY + window.scrollY)
-    this.lastStep = {x, y}
     // 如果当前位置已经有棋子了, 大家就当做无事发生
     if (!this.chessPieceArr[x][y]) {
       const type = this.count % 2 === 0 ? 'BLACK_CHESS_PIECE' : 'WHITE_CHESS_PIECE'
+      // 维护lastStep这个状态
+      this.lastStep = {x, y, type, id: this.count}
+      document.getElementById('cancel').innerHTML = '悔棋'
       const chessPiece = new ChessPiece(x, y, type, this.count)
       this.chessPieceArr[x][y] = {type, id: this.count}
       console.log(this.chessPieceArr[x][y])
       this.count++
       if (this.isCanvas) {
-        chessPiece.drawCanvas(this.ctx)
+        chessPiece.drawCanvas(this.chessBoardCtx)
       } else {
-        chessPiece.draw(this.chessBoard)
+        chessPiece.draw(this.chessBoardDom)
       }
       this.judge(x, y)
     }
@@ -69,31 +79,38 @@ export default class Gamer {
   // 悔棋
   cancelLastStep () {
     document.getElementById('cancel').innerHTML = '撤销悔棋'
-    console.log(this.lastStep)
     if (this.lastStep) {
       const {x, y} = this.lastStep
       this.count = this.count - 1
       this.chessPieceArr[x][y] = null
       if (this.isCanvas) {
         const temp = this.getRecoverArray(this.chessPieceArr)
-        drawBoardLines(this.ctx)
+        drawBoardLines(this.chessBoardCtx)
         temp.forEach(item => { item.drawCanvas() })
       } else {
         const chessPiece = document.getElementById(this.count)
         chessPiece.parentNode.removeChild(chessPiece)
       }
     }
-    console.log(this.chessPieceArr)
   }
   // 撤销悔棋
   cancelTheCancel () {
     document.getElementById('cancel').innerHTML = '悔棋'
+    const {x, y, type, id} = this.lastStep
+    const canceledPiece = new ChessPiece(x, y, type, id)
+    if (this.isCanvas) {
+      canceledPiece.drawCanvas(this.chessBoardCtx)
+    } else {
+      canceledPiece.draw(this.chessBoardDom)
+    }
+    this.chessPieceArr[x][y] = {type, id}
+    this.count = this.count + 1
   }
   removeDom () {
     if (!this.isCanvas) {
-      this.chessBoard.parentNode.removeChild(this.chessBoard)
+      this.chessBoardDom.parentNode.removeChild(this.chessBoardDom)
     } else {
-      this.chessBoard.style.display = 'none'
+      this.chessBoardDom.style.display = 'none'
     }
   }
   /**
@@ -114,8 +131,8 @@ export default class Gamer {
       this.judgeYX_(x, y, type)
     )
     if (isWin) {
-      setTimeout(() => alert(`${CHESS_TYPES[type].name}赢了!!!`), 0)
-      this.chessBoard.onclick = () => { alert(`${CHESS_TYPES[type].name}赢了, 别点了, 点毛啊`) }
+      setTimeout(() => window.alert(`${CHESS_TYPES[type].name}赢了!!!`), 0)
+      this.chessBoardDom.onclick = () => { window.alert(`${CHESS_TYPES[type].name}赢了, 别点了...`) }
     }
   }
   /**
