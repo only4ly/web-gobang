@@ -23,9 +23,6 @@ npm start
 npm run build
 ```
 
-## 待完成
-
-
 ## 小亮点
 1. 纯原生js编写
 2. 面向对象编程
