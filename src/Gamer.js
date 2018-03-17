@@ -39,6 +39,7 @@ export default class Gamer {
     if (!isCanvas) {
       document.getElementById('app').appendChild(this.chessBoardDom)
     }
+    document.getElementById('cancel').style.display = 'inline'
   }
   getRecoverArray (chessPieceArr) {
     const chessTemp = []
@@ -63,7 +64,8 @@ export default class Gamer {
       const type = this.count % 2 === 0 ? 'BLACK_CHESS_PIECE' : 'WHITE_CHESS_PIECE'
       // 维护lastStep这个状态
       this.lastStep = {x, y, type, id: this.count}
-      document.getElementById('cancel').innerHTML = '悔棋'
+      const cancel = document.getElementById('cancel')
+      if (cancel.innerHTML !== '悔棋') { cancel.innerHTML = '悔棋' }
       const chessPiece = new ChessPiece(x, y, type, this.count)
       this.chessPieceArr[x][y] = {type, id: this.count}
       console.log(this.chessPieceArr[x][y])
@@ -132,6 +134,7 @@ export default class Gamer {
     )
     if (isWin) {
       setTimeout(() => window.alert(`${CHESS_TYPES[type].name}赢了!!!`), 0)
+      document.getElementById('cancel').style.display = 'none'
       this.chessBoardDom.onclick = () => { window.alert(`${CHESS_TYPES[type].name}赢了, 别点了...`) }
     }
   }
