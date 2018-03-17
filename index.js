@@ -5,6 +5,7 @@ let game = new Gamer(gameConfig)
 
 document.getElementById('start').onclick = () => {
   game.removeDom()
+  gameConfig = {isCanvas: gameConfig.isCanvas}
   game = new Gamer(gameConfig) // 这里可以优化的, 懒得写了
 }
 document.getElementById('switch').onclick = () => {
