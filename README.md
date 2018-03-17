@@ -6,6 +6,7 @@
 - [x] 五子棋canvas版
 - [x] 悔棋与撤销悔棋
 - [ ] 测试与自动化测试
+- [ ] 函数式风格重写
 ## [Live Demo](https://only4ly.github.io/web-gobang/)
 ## How to run
 ```bash
