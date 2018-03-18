@@ -16,10 +16,6 @@ import { initChessPieceArr, transfromOffset2Grid, atLeastOneTrue } from './util'
  * chessBoardCtx 当渲染模式是canvas时, 保存canvas的Context (其实也可以不保存, 根据dom去getContext即可)
  */
 export default class Gamer {
-  /**
-   * 可以用这个数组恢复棋局, 顺便在进行切换canvas和dom的时候也可以用的
-   * @param {Array<Array<Object>>} chessPieceArr 保存棋局的数组
-   */
   constructor ({isCanvas, chessPieceArr = initChessPieceArr()} = {isCanvas: false, chessPieceArr: initChessPieceArr()}) {
     this.chessPieceArr = chessPieceArr
     this.isCanvas = isCanvas

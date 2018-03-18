@@ -20,10 +20,6 @@ export default class ChessPiece {
     chessPieceDom.style.top = getOffset(this.y)
     chessBoard.appendChild(chessPieceDom)
   }
-  remove () {
-    const chessPieceDom = document.getElementById(this.id)
-    chessPieceDom.parentNode.removeChild(chessPieceDom)
-  }
   drawCanvas (ctx) {
     console.log(this)
     ctx.fillStyle = CHESS_TYPES[this.chessType].color
@@ -35,7 +31,11 @@ export default class ChessPiece {
     circle.arc(x, y, CHESS_PIECE_WIDTH / 2, 0, 2 * Math.PI)
     ctx.fill(circle)
   }
-  removeCanvs (ctx) {
+  // remove () {
+  //   const chessPieceDom = document.getElementById(this.id)
+  //   chessPieceDom.parentNode.removeChild(chessPieceDom)
+  // }
+  // removeCanvs (ctx) {
 
-  }
+  // }
 }
