@@ -4,6 +4,8 @@
 ## Task List
 - [x] 五子棋html版
 - [x] 五子棋canvas版
+- [ ] 五子棋svg版
+- [ ] 五子棋webgl版
 - [x] 悔棋与撤销悔棋
 - [ ] 测试与自动化测试
 - [x] TypeScript重写
