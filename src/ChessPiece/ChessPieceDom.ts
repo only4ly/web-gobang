@@ -1,4 +1,4 @@
-import ChessPiece from "./ChessPiece"
+import ChessPiece from './ChessPiece'
 import { CHESS_PIECE_WIDTH, COLUMN_WIDTH, CHESS_COLORS, CHESS_PIECE_CLASS_NAME } from '../gameConfig'
 
 export default class ChessPieceDom implements ChessPiece {

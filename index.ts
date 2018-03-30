@@ -1,4 +1,4 @@
-import GamerDom from "./src/Gamer/GamerDom"
+import GamerDom from './src/Gamer/GamerDom'
 import GamerCanvas from './src/Gamer/GamerCanvas'
 
 console.log('hello world')

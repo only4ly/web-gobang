@@ -1,10 +1,10 @@
-import Judger from "./Judger";
+import Judger from './Judger';
 import Gamer from './Gamer'
 import { drawBoardLines, initCanvas } from './util'
 import { transfromOffset2Grid, initChessPieceArr } from '../util/index'
 import { CHESS_TYPES, CHESS_NAMES } from '../gameConfig'
-import ChessPieceCanvas from "../ChessPiece/ChessPieceCanvas"
-import GameViewer from "./GameViewer"
+import ChessPieceCanvas from '../ChessPiece/ChessPieceCanvas'
+import GameViewer from './GameViewer'
 
 export default class GamerCanvas extends Gamer implements GameViewer{
   viewContext: CanvasRenderingContext2D

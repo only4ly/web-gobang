@@ -1,5 +1,5 @@
-import ChessPiece from "./ChessPiece"
-import { CHESS_COLORS, COLUMN_WIDTH, CHESS_PIECE_WIDTH } from "../gameConfig";
+import ChessPiece from './ChessPiece'
+import { CHESS_COLORS, COLUMN_WIDTH, CHESS_PIECE_WIDTH } from '../gameConfig';
 
 export default class ChessPieceCanvas implements ChessPiece {
   x: number
