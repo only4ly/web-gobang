@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js"
+    "build": "parcel build index.html",
+    "start": "parcel index.html"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "babel-preset-es2015": "^6.24.1",
     "parcel": "^1.12.3"
   },
   "author": "zhangw",
