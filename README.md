@@ -1,16 +1,21 @@
 # web-gobang
-基于web技术实现的五子棋
+
+基于 web 技术实现的五子棋
 
 ## Task List
-- [x] 五子棋html版
-- [x] 五子棋canvas版
-- [ ] 五子棋svg版
-- [ ] 五子棋webgl版
+
+- [x] 五子棋 html 版
+- [x] 五子棋 canvas 版
+- [ ] 五子棋 svg 版
+- [ ] 五子棋 webgl 版
 - [x] 悔棋与撤销悔棋
 - [ ] 测试与自动化测试
-- [x] TypeScript重写
+- [x] TypeScript 重写
+
 ## [Live Demo](https://only4ly.github.io/web-gobang/)
+
 ## How to run
+
 ```bash
 //clone
 git clone https://github.com/only4ly/web-gobang.git
@@ -27,11 +32,11 @@ yarn build
 ```
 
 ## 小亮点
-1. 纯ts编写
+
+1. 纯 ts 编写
 2. 面向对象编程
 
 ## One more thing
 
-typescript 大法好, 但是oop写起来挺...
-
-
+1. typescript 大法好, 但是 oop 写起来挺...
+2. parcel 大法好

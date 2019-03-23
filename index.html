@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>web gobang</title>
     <style>
-      .button{
+      .button {
         width: 100px;
         height: 50px;
         margin: 20px;
       }
-      #app{
+      #app {
         width: 800px;
         height: 800px;
       }
@@ -17,10 +17,16 @@
   </head>
   <body>
     <div id="app">
-        <canvas id="canvas" width="760" height="760" style="display: none;"></canvas>
+      <canvas
+        id="canvas"
+        width="760"
+        height="760"
+        style="display: none;"
+      ></canvas>
     </div>
     <button class="button" id="start">重新开始</button>
     <button class="button" id="cancel">悔棋</button>
     <button class="button" id="switch">切换渲染模式</button>
+    <script src="./index.ts"></script>
   </body>
 </html>
